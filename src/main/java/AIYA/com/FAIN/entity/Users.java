@@ -36,12 +36,7 @@ public class Users {
   private LocalDate birth;
 
   @Column(nullable=false)
-  private String zone_code;
-
-  @Column(nullable=false)
-  private String road_address;
-
-  private String detail_address;
+  private String address;
 
   @Column(nullable=false)
   private String bloodtype;
