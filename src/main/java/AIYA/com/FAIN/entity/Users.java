@@ -2,6 +2,8 @@ package AIYA.com.FAIN.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
@@ -17,8 +19,11 @@ import lombok.Setter;
 public class Users {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id; // 회원번호
+
   @Column(nullable=false, unique=true)
-  private long user_id; //보호자 아이디
+  private String user_id; //보호자 아이디
 
   @Column(nullable=false)
   private String password; // 보호자 비밀번호
