@@ -20,8 +20,8 @@ public class UserService {
     Users user = new Users(
         dto.getUserId(),
         dto.getPassword(),
-        dto.getF_name(),
-        dto.getF_tel(),
+        dto.getFName(),
+        dto.getFTel(),
         dto.getName(),
         dto.getBirth(),
         dto.getAddress(),
@@ -29,11 +29,10 @@ public class UserService {
         dto.getWeight(),
         dto.getBloodtype(),
         dto.getMedicine(),
-        dto.getHospital_name(),
+        dto.getHospitalName(),
         dto.getDisease(),
         dto.getAllergic()
     );
-
     userRepository.save(user);
   }
 

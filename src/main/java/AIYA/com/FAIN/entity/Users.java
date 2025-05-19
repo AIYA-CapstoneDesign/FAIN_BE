@@ -19,12 +19,12 @@ import lombok.Setter;
 @NoArgsConstructor // 기본 생성자
 @AllArgsConstructor // 모든 필드를 파라미터로 받는 생성자
 public class Users {
-  public Users(String userId, String password, String f_name, String f_tel, String name, LocalDate birth,
-      String address, String height, String weight, String bloodtype, String medicine, String hospital_name, String disease, String allergic ){
+  public Users(String userId, String password, String fName, String fTel, String name, LocalDate birth,
+      String address, String height, String weight, String bloodtype, String medicine, String hospitalName, String disease, String allergic ){
     this.userId = userId;
     this.password = password;
-    this.f_name = f_name;
-    this.f_tel = f_tel;
+    this.fName = fName;
+    this.fTel = fTel;
     this.name = name;
     this.birth=birth;
     this.address = address;
@@ -32,7 +32,7 @@ public class Users {
     this.weight = weight;
     this.bloodtype = bloodtype;
     this.medicine = medicine;
-    this.hospital_name = hospital_name;
+    this.hospitalName = hospitalName;
     this.disease = disease;
     this.allergic = allergic;
 
@@ -48,11 +48,11 @@ public class Users {
   @Column(nullable=false)
   private String password; // 보호자 비밀번호
 
-  @Column(nullable=false)
-  private String f_name;
+  @Column(name = "f_name",nullable=false)
+  private String fName;
 
-  @Column(nullable=false)
-  private String f_tel;
+  @Column(name="f_tel",nullable=false)
+  private String fTel;
 
   @Column(nullable=false)
   private String name;
@@ -63,20 +63,21 @@ public class Users {
   @Column(nullable=false)
   private String address;
 
-  @Column(nullable=false)
-  private String bloodtype;
-
-  private String disease;
-
-  private String hospital_name;
-
   private String height;
 
   private String weight;
 
-  private String allergic;
+  @Column(nullable=false)
+  private String bloodtype;
 
   private String medicine;
+
+  @Column(name = "hospital_name")
+  private String hospitalName;
+
+  private String disease;
+
+  private String allergic;
 
 
 }
