@@ -3,23 +3,28 @@ package AIYA.com.FAIN.service;
 import AIYA.com.FAIN.dto.UserSignupDto;
 import AIYA.com.FAIN.entity.Users;
 import AIYA.com.FAIN.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
-  @Autowired
   private final UserRepository userRepository;
+  private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+  public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    this.userRepository = userRepository;
+    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+  }
 
   public void signup(UserSignupDto dto){
     if (userRepository.existsByUserId(dto.getUserId())) {
       throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
     }
+    // 비밀번호 암호화
+    String encodedPassword = bCryptPasswordEncoder.encode(dto.getPassword());
     Users user = new Users(
         dto.getUserId(),
-        dto.getPassword(),
+        encodedPassword,
         dto.getFName(),
         dto.getFTel(),
         dto.getName(),
