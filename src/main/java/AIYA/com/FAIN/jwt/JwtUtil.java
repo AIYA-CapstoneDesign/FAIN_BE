@@ -31,7 +31,7 @@ public class JwtUtil {
         .verifyWith(secretKey) // 비밀키 대조
         .build().parseSignedClaims(token) // 전달된 JWT 토큰 문자열해석해서 header,payload,signature정보 추출
         .getPayload()
-        .get("userId",String.class);
+        .get("sub",String.class);
   }
 
 }
