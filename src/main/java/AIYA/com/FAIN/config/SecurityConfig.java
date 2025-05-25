@@ -1,5 +1,6 @@
 package AIYA.com.FAIN.config;
 
+import AIYA.com.FAIN.jwt.JwtAuthorizationFilter;
 import AIYA.com.FAIN.jwt.JwtUtil;
 import AIYA.com.FAIN.jwt.LoginFilter;
 import org.springframework.context.annotation.Bean;
@@ -46,6 +47,9 @@ public class SecurityConfig {
     http.formLogin((auth) -> auth.disable());
     // http basic 인증 방식 disable (스프링 내부에서 제공하는 base64로 ID/PW 담기 끄기 -> 우리는 JWT로)
     http.httpBasic((auth) -> auth.disable());
+    //JWT 인증
+    http.addFilterBefore(new JwtAuthorizationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
     // 허용해주는 API
     http.authorizeHttpRequests((auth) -> auth
         .requestMatchers(
