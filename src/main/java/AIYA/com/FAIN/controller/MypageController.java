@@ -1,10 +1,13 @@
 package AIYA.com.FAIN.controller;
 
 import AIYA.com.FAIN.dto.MypageResponseDto;
+import AIYA.com.FAIN.dto.MypageUpdateRequestDto;
 import AIYA.com.FAIN.jwt.JwtUtil;
 import AIYA.com.FAIN.service.MypageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +33,19 @@ public class MypageController {
     MypageResponseDto responseDto = mypageService.getMyPage(userId);
 
     return ResponseEntity.ok(responseDto);
+  }
+
+  @PatchMapping("/api/v1/updateProfiles")
+  public ResponseEntity<String> updateProfiles(@RequestHeader("Authorization") String header,
+      @RequestBody MypageUpdateRequestDto dto){
+    String token = header;
+    if (header.startsWith("Bearer ")) {
+      token = header.substring(7).trim(); // "Bearer " 자르고 trim()으로 공백없애기
+    }
+    String userId = jwtUtil.getUserIdFromToken(token);
+
+    mypageService.UpdateMypage(userId,dto);
+    return ResponseEntity.ok("success");
   }
 
 }
