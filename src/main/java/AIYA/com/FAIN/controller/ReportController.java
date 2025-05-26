@@ -24,7 +24,7 @@ public class ReportController {
     this.reportService = reportService;
   }
 
-  @Operation(summary = "환자 기본 정보 조회",description = "환자 기본 정보를 조회합니다.")
+  @Operation(summary = "환자 기본 정보 조회",description = "환자의 기본 정보를 조회합니다.")
   @GetMapping("/details")
   public ResponseEntity<UserDetailResponseDto> getUserDetails(@RequestHeader("Authorization") String header) throws Exception{
     String token = header;
