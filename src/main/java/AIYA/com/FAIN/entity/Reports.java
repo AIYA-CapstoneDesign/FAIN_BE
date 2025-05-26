@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,10 @@ public class Reports {
   @Column(name="report_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer reportId;
+
+  @ManyToOne
+  @JoinColumn(name = "id",referencedColumnName = "id",nullable = false)
+  private Users user;
 
   @Column(nullable = true)
   private String report;
