@@ -4,6 +4,8 @@ import AIYA.com.FAIN.dto.FcmTokenRequestDto;
 import AIYA.com.FAIN.entity.FcmToken;
 import AIYA.com.FAIN.jwt.JwtUtil;
 import AIYA.com.FAIN.repository.FcmTokenRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +22,15 @@ public class FcmController {
   private final FcmTokenRepository fcmTokenRepository;
   private final JwtUtil jwtUtil;
 
+  // 로그인 후 토큰 등록 api
+  @Operation(summary = "FCM 토큰 등록", description = "로그인한 사용자의 발급된 토큰을 등록한다.")
   @PostMapping("/registers")
-  public ResponseEntity<String> registerToken(@RequestHeader("Authorization") String JwtToken, @RequestBody FcmTokenRequestDto dto) {
+  public ResponseEntity<String> registerToken(@Parameter(
+      name = "Authorization",
+      description = "Bearer {token}",
+      required = true,
+      example = "Bearer eyJhbGciOiJIUzI1NiJ9..."
+  )@RequestHeader("Authorization") String JwtToken, @RequestBody FcmTokenRequestDto dto) {
     String jwtToken = JwtToken.substring(7);
     String userId = jwtUtil.getUserIdFromToken(jwtToken);
 

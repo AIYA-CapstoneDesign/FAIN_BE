@@ -32,9 +32,8 @@ public class UserController {
   }
 
   @Operation(summary = "아이디 중복 확인", description = "회원가입 시 아이디가 사용가능한지 혹은 중복되어 사용불가능한지 확인합니다.")
-  @Parameter(name = "userId", description = "중복 확인할 id")
   @GetMapping("/api/v1/signup/check-id")
-  public ResponseEntity<?> checkId(@RequestParam String userId){
+  public ResponseEntity<?> checkId(@Parameter(name = "userId", description = "중복 확인할 id") @RequestParam String userId){
     boolean idDuplicated = userService.checkUserId(userId);
     if(idDuplicated){
       return ResponseEntity.ok("이미 사용중인 아이디 입니다.");
