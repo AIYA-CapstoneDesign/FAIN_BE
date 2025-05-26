@@ -19,7 +19,7 @@ public class FcmToken {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id; // 자동 증가되는 DB의 기본티
 
-  private Long user_Id; // 사용자의 ID. 나중에 연결
+  private String userId; // 사용자의 ID. 나중에 연결
 
   @Column(length=512, nullable = false, unique =true)
   private String token; // 토큰

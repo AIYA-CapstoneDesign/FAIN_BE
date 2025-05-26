@@ -24,14 +24,6 @@ public class SecurityConfig {
     return new BCryptPasswordEncoder();
   }
 
-  //AuthenticationManager가 인자로 받을 AuthenticationConfiguraion 객체 생성자 주입
-  private final AuthenticationConfiguration authenticationConfiguration;
-
-  public SecurityConfig(AuthenticationConfiguration authenticationConfiguration) {
-
-    this.authenticationConfiguration = authenticationConfiguration;
-  }
-
   //AuthenticationManager Bean 등록
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -59,7 +51,8 @@ public class SecurityConfig {
             "/api/v1/signup",
             "/api/v1/signup/**",
             "/swagger-ui/**",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**",
+            "/api/v1/notification/creates"
         ).permitAll()
         .anyRequest().authenticated());
 
