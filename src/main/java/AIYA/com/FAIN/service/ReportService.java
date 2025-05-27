@@ -1,6 +1,8 @@
 package AIYA.com.FAIN.service;
 
 import AIYA.com.FAIN.dto.UserDetailResponseDto;
+import AIYA.com.FAIN.entity.ActionType;
+import AIYA.com.FAIN.entity.Reports;
 import AIYA.com.FAIN.entity.Users;
 import AIYA.com.FAIN.error.ErrorCode;
 import AIYA.com.FAIN.error.exception.CustomException;
@@ -8,6 +10,7 @@ import AIYA.com.FAIN.repository.ReportRepository;
 import AIYA.com.FAIN.repository.UserRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReportService {
@@ -34,4 +37,12 @@ public class ReportService {
         .build();
 
   }
+
+  @Transactional
+  public void updateAction(Long reportId, ActionType actionType){
+    Reports reports = reportRepository.findById(reportId)
+        .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_REPORTS));
+    reports.updateAction(actionType);
+  }
+
 }
