@@ -2,6 +2,8 @@ package AIYA.com.FAIN.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,7 +27,7 @@ public class Reports {
   @Id
   @Column(name="report_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer reportId;
+  private Long reportId;
 
   @ManyToOne
   @JoinColumn(name = "id",referencedColumnName = "id",nullable = false)
@@ -37,11 +39,20 @@ public class Reports {
   @Column(name="situation_img",nullable = true)
   private String situationImg;
 
+  @Enumerated(EnumType.STRING)
   @Column(name="action_type",nullable = true)
   private ActionType actionType;
 
   @CreationTimestamp //처음 insert될 때, 자동으로 시간 입력, 이후 변경되지 않음
   @Column(name="situation_time",updatable = false,nullable = false)
   private LocalDateTime situationTime;
+
+  public void updateAction(ActionType actionType){
+    if(this.actionType != null){
+      throw new IllegalStateException("이미 조치된 리포트입니다.");
+    }
+    this.actionType = actionType;
+
+  }
 
 }
