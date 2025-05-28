@@ -14,4 +14,12 @@ public enum ErrorCode {
   //Java enum은 필드선언을 나중에 해줘야함
   private final HttpStatus httpStatus;
   private final String message;
+
+  public HttpStatus getHttpStatus() {
+    return httpStatus;
+  }
+
+  public String getMessage() {
+    return message;
+  }
 }

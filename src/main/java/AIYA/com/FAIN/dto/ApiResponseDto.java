@@ -8,31 +8,26 @@ import lombok.Setter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class ApiResponseDto<T> {
   private boolean success;
   private T data;
   private String message;
-
-  public ApiResponseDto(boolean success) {
-    this.success = success;
+  //성공 응답 (data만)
+  public static <T> ApiResponseDto<T> success(T data) {
+    return new ApiResponseDto<>(true, data, null);
   }
 
-  public ApiResponseDto (boolean success, T data){
-    this.success = success;
-    this.data = data;
+  //성공 응답 (message만)
+  public static ApiResponseDto<Void> successMessage(String message) {
+    return new ApiResponseDto<>(true, null, message);
   }
 
-  public ApiResponseDto (boolean success, String message){
-    this.success = success;
-    this.message = message;
-  }
-
-  public ApiResponseDto (boolean success, T data, String message){
-    this.success = success;
-    this.data = data;
-    this.message = message;
+  //실패 응답 (message만)
+  public static ApiResponseDto<Void> error(String message) {
+    return new ApiResponseDto<>(false, null, message);
   }
 
 }
