@@ -56,7 +56,7 @@ public class ReportController {
   public ResponseEntity<ApiResponseDto<?>> updateAction(@PathVariable Long reportId,
       @RequestBody UpdateActionDto dto){
     reportService.updateAction(reportId,dto.getActionType());
-    return ResponseEntity.ok(ApiResponseDto.successMessage("조치 방법이 저장되었습니다."));
+    return ResponseEntity.ok(ApiResponseDto.successMessage("조치방법이 저장되었습니다."));
 
   }
 
