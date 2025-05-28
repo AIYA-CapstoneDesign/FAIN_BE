@@ -1,5 +1,6 @@
 package AIYA.com.FAIN.controller;
 
+import AIYA.com.FAIN.dto.ApiResponseDto;
 import AIYA.com.FAIN.dto.UpdateActionDto;
 import AIYA.com.FAIN.dto.UserDetailResponseDto;
 import AIYA.com.FAIN.jwt.JwtUtil;
@@ -38,16 +39,12 @@ public class ReportController {
       security = @SecurityRequirement(name = "BearerAuth")
   )
   @GetMapping("/details")
-  public ResponseEntity<UserDetailResponseDto> getUserDetails() throws Exception{
-//    String token = header;
-//    if (header.startsWith("Bearer ")) {
-//      token = header.substring(7).trim();
-//    }
+  public ResponseEntity<ApiResponseDto<UserDetailResponseDto>> getUserDetails() throws Exception{
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String userId = authentication.getName();
     UserDetailResponseDto userDetailResponseDto = reportService.getUserDetails(userId);
 
-    return ResponseEntity.ok(userDetailResponseDto);
+    return ResponseEntity.ok(ApiResponseDto.success(reportService.getUserDetails(userId)));
   }
 
   @Operation(
@@ -56,10 +53,10 @@ public class ReportController {
       security = @SecurityRequirement(name="BearerAuth")
   )
   @PatchMapping("/actions/{reportId}")
-  public ResponseEntity<?> updateAction(@PathVariable Long reportId,
+  public ResponseEntity<ApiResponseDto<?>> updateAction(@PathVariable Long reportId,
       @RequestBody UpdateActionDto dto){
     reportService.updateAction(reportId,dto.getActionType());
-    return ResponseEntity.ok("조치가 저장되었습니다.");
+    return ResponseEntity.ok(ApiResponseDto.successMessage("조치 방법이 저장되었습니다."));
 
   }
 
