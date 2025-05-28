@@ -38,3 +38,9 @@ out/
 
 ### application.yml ###
 src/main/resources/application*.yml
+
+### env ###
+.env
+
+### firebase ###
+src/main/resources/firebase/firebase-service-account.json
