@@ -1,5 +1,6 @@
 package AIYA.com.FAIN.controller;
 
+import AIYA.com.FAIN.dto.ApiResponseDto;
 import AIYA.com.FAIN.dto.FallAlertRequestDto;
 import AIYA.com.FAIN.entity.Reports;
 import AIYA.com.FAIN.entity.Users;
@@ -8,6 +9,8 @@ import AIYA.com.FAIN.repository.UserRepository;
 import AIYA.com.FAIN.service.FcmService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +31,7 @@ public class AlertController {
 
   @Operation(summary = "알림 생성", description = "낙상 감지시 사진 및 정보를 reports에 저장 후 해당 유저로 알림 전송")
   @PostMapping("/api/v1/notification/creates")
-  public ResponseEntity<String> notifyFall(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+  public ResponseEntity<ApiResponseDto<Map<String,Long>>> notifyFall(@io.swagger.v3.oas.annotations.parameters.RequestBody(
       description = "낙상 감지 시 전달받는 사진 및 유저 아이디 정보",
       required = true
   )@RequestBody FallAlertRequestDto dto){
@@ -44,10 +47,16 @@ public class AlertController {
 
     fallAlertRepository.save(reports);
 
-    //알림 전송
+    // 알림 전송
     fcmService.sendMessage(dto.getUserId());
 
-    return ResponseEntity.ok("success");
+    Map<String,Long> data = new HashMap<>();
+    data.put("reportId", reports.getReportId());
+
+    // 응답 생성
+    ApiResponseDto<Map<String,Long>> response = ApiResponseDto.successDataAndMessage(data,"낙상이 감지되었습니다.");
+
+    return ResponseEntity.ok(response);
   }
 
 

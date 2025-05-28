@@ -25,6 +25,11 @@ public class ApiResponseDto<T> {
     return new ApiResponseDto<>(true, null, message);
   }
 
+  //성공 응답(data,message)
+  public static <T> ApiResponseDto<T> successDataAndMessage(T data, String message) {
+    return new ApiResponseDto<>(true, data, message);
+  }
+
   //실패 응답 (message만)
   public static ApiResponseDto<Void> error(String message) {
     return new ApiResponseDto<>(false, null, message);
