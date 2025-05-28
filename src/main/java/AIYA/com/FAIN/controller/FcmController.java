@@ -1,5 +1,6 @@
 package AIYA.com.FAIN.controller;
 
+import AIYA.com.FAIN.dto.ApiResponseDto;
 import AIYA.com.FAIN.dto.FcmTokenRequestDto;
 import AIYA.com.FAIN.entity.FcmToken;
 import AIYA.com.FAIN.jwt.JwtUtil;
@@ -25,7 +26,7 @@ public class FcmController {
   // 로그인 후 토큰 등록 api
   @Operation(summary = "FCM 토큰 등록", description = "로그인한 사용자의 발급된 토큰을 등록한다.")
   @PostMapping("/registers")
-  public ResponseEntity<String> registerToken(@Parameter(
+  public ResponseEntity<ApiResponseDto<Void>> registerToken(@Parameter(
       name = "Authorization",
       description = "Bearer {token}",
       required = true,
@@ -42,7 +43,7 @@ public class FcmController {
       return fcmTokenRepository.save(fcmToken);
     });
 
-    return ResponseEntity.ok("토큰 등록 완료");
+    return ResponseEntity.ok(ApiResponseDto.success(null));
   }
 
 

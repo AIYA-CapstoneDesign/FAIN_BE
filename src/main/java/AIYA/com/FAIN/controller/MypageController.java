@@ -1,5 +1,6 @@
 package AIYA.com.FAIN.controller;
 
+import AIYA.com.FAIN.dto.ApiResponseDto;
 import AIYA.com.FAIN.dto.MypageResponseDto;
 import AIYA.com.FAIN.dto.MypageUpdateRequestDto;
 import AIYA.com.FAIN.jwt.JwtUtil;
@@ -27,7 +28,7 @@ public class MypageController {
   // 마이페이지 조회 api
   @Operation(summary = "마이페이지 조회",description = "JWT토큰을 헤더에 담아 해당 유저의 마이페이지를 조회한다.")
   @GetMapping("/api/v1/mypage")
-  public ResponseEntity<MypageResponseDto> getMypage(@Parameter(
+  public ResponseEntity<ApiResponseDto<MypageResponseDto>> getMypage(@Parameter(
       name = "Authorization",
       description = "Bearer {JWT 토큰}",
       required = true,
@@ -42,13 +43,13 @@ public class MypageController {
     String userId = jwtUtil.getUserIdFromToken(token);
     MypageResponseDto responseDto = mypageService.getMyPage(userId);
 
-    return ResponseEntity.ok(responseDto);
+    return ResponseEntity.ok(ApiResponseDto.success(responseDto));
   }
 
   // 마이페이지 정보수정 api
   @Operation(summary = "마이페이지 정보 수정",description = "JWT 토큰을 헤더에 담아 해당 유저의 정보를 수정한다.")
   @PatchMapping("/api/v1/updateProfiles")
-  public ResponseEntity<String> updateProfiles(@Parameter(
+  public ResponseEntity<ApiResponseDto<Void>> updateProfiles(@Parameter(
       name = "Authorization",
       description = "Bearer {JWT 토큰}",
       required = true,
@@ -62,7 +63,7 @@ public class MypageController {
     String userId = jwtUtil.getUserIdFromToken(token);
 
     mypageService.UpdateMypage(userId,dto);
-    return ResponseEntity.ok("success");
+    return ResponseEntity.ok(ApiResponseDto.success(null));
   }
 
 }
