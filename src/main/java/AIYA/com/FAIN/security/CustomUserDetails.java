@@ -16,7 +16,7 @@ public class CustomUserDetails  implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    //권한 필요 없으면 빈 리스트 반환(사용자 권한 구분 필요 없고 그냥 로그인만 하면됨)
+    //권한 필요 없으면 빈 리스트반환(사용자 권한 구분 필요 없고 그냥 로그인만 하면됨)
     return Collections.emptyList();
   }
 
