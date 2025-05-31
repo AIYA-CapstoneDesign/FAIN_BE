@@ -31,3 +31,4 @@ springdoc:
     display-server: true
     use-root-path: true
     server-url: https://fain-aiya.shop
+
