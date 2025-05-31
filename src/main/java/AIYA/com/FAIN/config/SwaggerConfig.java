@@ -21,10 +21,16 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
   @Bean
   public OpenAPI openAPI() {
+    Server prodServer = new Server();
+    prodServer.setUrl("https://fain-aiya.shop");
+    prodServer.setDescription("Production Server");
     return new OpenAPI()
-        .servers(List.of(new Server().url("https://fain-aiya.shop").description("배포 서버")))
+        .servers(List.of(prodServer))
         .components(new Components())
-        .info(apiInfo());
+        .info(new Info()
+            .title("FAIN Swagger")
+            .description("FAIN REST API")
+            .version("1.0.0"));
   }
   private Info apiInfo() {
     return new Info()

@@ -26,9 +26,5 @@ spring:
     service-account:
       path : ${FCM_KEY_PATH}
 
-springdoc:
-  swagger-ui:
-    display-server: true
-    use-root-path: true
-    server-url: https://fain-aiya.shop
+
 
