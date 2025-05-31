@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
   @Bean
   public OpenAPI openAPI() {
+    System.out.println("Swagger Config 적용!");
     Server prodServer = new Server();
     prodServer.setUrl("https://fain-aiya.shop");
     prodServer.setDescription("Production Server");
