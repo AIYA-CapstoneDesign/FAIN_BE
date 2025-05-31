@@ -27,8 +27,12 @@ public class SwaggerConfig {
   public OpenAPI openAPI() {
     log.info("✅ SwaggerConfig: OpenAPI Bean 생성됨");  // 요 줄 꼭!
 
+    Server prodServer = new Server();
+    prodServer.setUrl("https://fain-aiya.shop");
+    prodServer.setDescription("Production Server");
 
     return new OpenAPI()
+        .servers(List.of(prodServer))
         .components(new Components())
         .info(new Info()
             .title("FAIN Swagger")
