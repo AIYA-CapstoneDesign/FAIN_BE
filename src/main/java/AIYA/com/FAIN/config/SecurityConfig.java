@@ -53,7 +53,7 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil) throws Exception {
     // crsf disable
-    http.cors(withDefaults());
+    http.cors().configurationSource(corsConfigurationSource());
     http.csrf((auth) -> auth.disable());
     // From 로그인 방식 disable (spring security 자체에서 제공하는 login api 끄기)
     http.formLogin((auth) -> auth.disable());
