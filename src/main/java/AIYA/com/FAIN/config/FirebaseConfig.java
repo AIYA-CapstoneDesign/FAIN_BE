@@ -15,7 +15,7 @@ public class FirebaseConfig {
   public void initializeFirebase(){
     try{
       // json의 서비스 계정 키 파일 불러오기
-      FileInputStream serviceAccount = new FileInputStream("src/main/resources/firebase/firebase-service-account.json");
+      FileInputStream serviceAccount = new FileInputStream(System.getenv("FCM_KEY_PATH"));
       // 그 키로 Firebase와 통신할 수 있는 인증 옵션 설정
       FirebaseOptions options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
 
