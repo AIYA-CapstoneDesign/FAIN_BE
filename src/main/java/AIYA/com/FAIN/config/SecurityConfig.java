@@ -49,6 +49,7 @@ public class SecurityConfig {
     source.registerCorsConfiguration("/**", configuration);
     return source;
   }
+
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil) throws Exception {
     // crsf disable
