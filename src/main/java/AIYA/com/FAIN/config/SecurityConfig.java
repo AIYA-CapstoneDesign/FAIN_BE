@@ -79,7 +79,6 @@ public class SecurityConfig {
         .anyRequest().authenticated());
 
     http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil), UsernamePasswordAuthenticationFilter.class);
-
     // 세션 비활성화 설정.사용자를 인증하면 서버 세션에 인증 정보를 저장. 하지만 JWT 방식은 매 요청마다 토큰을 보내서 저장같은건 필요 없음
     http.sessionManagement(
         (session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
