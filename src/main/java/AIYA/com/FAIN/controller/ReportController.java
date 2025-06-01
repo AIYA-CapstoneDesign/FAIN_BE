@@ -49,7 +49,7 @@ public class ReportController {
 
   @Operation(
       summary = "조치 방법 저장",
-      description = "조치방법(119,보호자조치)를 저장합니다.",
+      description = "조치방법(119,보호자조치)를저장합니다.",
       security = @SecurityRequirement(name="BearerAuth")
   )
   @PatchMapping("/actions/{reportId}")
@@ -59,6 +59,7 @@ public class ReportController {
     return ResponseEntity.ok(ApiResponseDto.successMessage("조치방법이 저장되었습니다."));
 
   }
+
 
 
 }
