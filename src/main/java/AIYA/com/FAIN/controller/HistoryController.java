@@ -6,6 +6,7 @@ import AIYA.com.FAIN.service.HistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,13 +14,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class HistoryController {
 
   private final HistoryService historyService;
 
-  public HistoryController(HistoryService historyService) {
-    this.historyService = historyService;
-  }
+//  public HistoryController(HistoryService historyService) {
+//    this.historyService = historyService;
+//  }
   @Operation(
       summary = "유저 히스토리 간략 조회",
 
