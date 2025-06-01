@@ -66,6 +66,11 @@ public class SecurityConfig {
             "/join",
             "/api/v1/signup",
             "/api/v1/signup/**",
+            "/swagger-ui/**",               //  Swagger 리소스들
+            "/swagger-ui.html",            //  Swagger 진입 경로
+            "/swagger-resources/**",       //  SpringFox 방식일 때 필요
+            "/webjars/**",                 //  Swagger UI가 내부적으로 쓰는 정적 자원
+            "/v3/api-docs/**",
             "/api/v1/notification/creates"
         ).permitAll()
         .anyRequest().authenticated());
