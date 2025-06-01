@@ -1,5 +1,7 @@
 package AIYA.com.FAIN.config;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 import AIYA.com.FAIN.jwt.JwtAuthorizationFilter;
 import AIYA.com.FAIN.jwt.JwtUtil;
 import AIYA.com.FAIN.jwt.LoginFilter;
@@ -37,7 +39,8 @@ public class SecurityConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.addAllowedOriginPattern("https://fain-aiya.shop");
+    configuration.addAllowedOrigin("http://localhost:5173");
+    configuration.addAllowedOrigin("https://fain-aiya.shop");
     configuration.addAllowedHeader("*");
     configuration.addAllowedMethod("*");
     configuration.setAllowCredentials(true);
@@ -50,6 +53,7 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil) throws Exception {
     // crsf disable
+    http.cors(withDefaults());
     http.csrf((auth) -> auth.disable());
     // From 로그인 방식 disable (spring security 자체에서 제공하는 login api 끄기)
     http.formLogin((auth) -> auth.disable());
