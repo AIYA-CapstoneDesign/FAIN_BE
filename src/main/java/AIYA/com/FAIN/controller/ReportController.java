@@ -60,6 +60,19 @@ public class ReportController {
 
   }
 
+  @Operation(
+      summary = "종합 리포트 조회",
+      description = "낙상 사진과 환자의 정보를 이용해 낙상 리포트를 조회합니다.",
+      security = @SecurityRequirement(name = "BearerAuth")
+  )
+  @GetMapping("/reports/{reportId}")
+  public ResponseEntity<ApiResponseDto<?>> getReports(@PathVariable Long reportId){
+
+
+  }
+
+
+
 
 
 }
