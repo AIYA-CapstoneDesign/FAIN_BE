@@ -28,8 +28,7 @@ public class HistoryController {
       summary = "유저 히스토리 간략 조회",
 
       description = "유저 ID를 통해 이력 리스트를 조회한다. (JWT 인증 필요)",
-      security =  @SecurityRequirement(name = "BearerAuth"))
-
+      security = @SecurityRequirement(name = "BearerAuth"))
   @GetMapping("/history")
   public ResponseEntity<ApiResponseDto<List<HistoryResponseDto>>> getHistory() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
