@@ -24,12 +24,16 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    System.out.println("[DEBUG] LoginFilter - attemptAuthentication 호출됨");
+
     try {
       ObjectMapper objectMapper = new ObjectMapper();
       Map<String, String> jsonRequest = objectMapper.readValue(request.getInputStream(), Map.class);
 
       String userId = jsonRequest.get("userId");
       String password = jsonRequest.get("password");
+
+      System.out.println("[DEBUG] userId=" + userId + ", password=" + (password != null ? "*****" : null));
 
       if(userId == null) userId = "";
       if(password == null) password = "";
@@ -48,6 +52,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
   //로그인 성공시 실행하는 메소드 (여기서 JWT를 발급하면 됨)
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication)throws IOException {
+    System.out.println("[DEBUG] LoginFilter - 로그인 성공 userId=" + authentication.getName());
     String userId = authentication.getName();
     String token = jwtUtil.createToken(userId);
 
@@ -58,6 +63,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
   //로그인 실패시 실행하는 메소드
   @Override
   protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed)throws IOException {
+    System.out.println("[DEBUG] LoginFilter - 로그인 실패: " + failed.getMessage());
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     response.setContentType("application/json");
     response.getWriter().write("{\"error\": \"로그인 실패\"}");
