@@ -1,5 +1,6 @@
 package AIYA.com.FAIN.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +12,9 @@ import lombok.Setter;
 public class MypageUpdateRequestDto {
 
   // 보호자 정보수정
+  @JsonProperty("fName")
   private String fName;
+  @JsonProperty("fTel")
   private String fTel;
 
   // 환자 정보 수정
@@ -24,6 +27,7 @@ public class MypageUpdateRequestDto {
   private String disease;
   private String allergic;
   private String medicine;
+  @JsonProperty("hospitalName")
   private String hospitalName;
 
 
