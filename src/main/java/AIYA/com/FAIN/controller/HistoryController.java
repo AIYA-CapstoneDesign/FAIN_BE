@@ -55,7 +55,7 @@ public class HistoryController {
       security = @SecurityRequirement(name = "BearerAuth")
   )
   @GetMapping("/history/{reportId}")
-  public ResponseEntity<ApiResponseDto<HistoryDetailResponseDto>> getHistoryDetail(@PathVariable Long reportId) {
+  public ResponseEntity<ApiResponseDto<HistoryDetailResponseDto>> getHistoryDetail(@PathVariable("reportId") Long reportId) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String userId = authentication.getName();
 
