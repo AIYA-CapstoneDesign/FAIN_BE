@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ public class SwaggerConfig {
 
     return new OpenAPI()
         .components(new Components())
+        .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
         .info(new Info()
             .title("FAIN Swagger")
             .description("FAIN REST API")
