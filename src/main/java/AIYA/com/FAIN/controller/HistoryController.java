@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/history")
 public class HistoryController {
 
   private final HistoryService historyService;
@@ -39,7 +39,7 @@ public class HistoryController {
       security = { @SecurityRequirement(name = "BearerAuth") }
   )
 
-  @GetMapping("/history")
+  @GetMapping("")
 
   public ResponseEntity<ApiResponseDto<List<HistoryResponseDto>>> getHistory() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -51,29 +51,20 @@ public class HistoryController {
   }
 
   // 히스토리 상세조회
-//  @Operation(
-//      summary = "히스토리 상세 조회",
-//      description = "특정 리포트ID의 낙상 상세 이력",
-//      security = @SecurityRequirement(name = "BearerAuth")
-//  )
-//  @GetMapping("/history/{reportId}")
-//  public ResponseEntity<ApiResponseDto<HistoryDetailResponseDto>> getHistoryDetail(@PathVariable("reportId") Long reportId) {
-////    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-////    String userId = authentication.getName();
-////
-////    HistoryDetailResponseDto detail = historyService.getHistoryDetailByReportIdAndUserId(reportId, userId);
-//
-////    return ResponseEntity.ok(ApiResponseDto.success(detail));
-//  }
   @Operation(
       summary = "히스토리 상세 조회",
       description = "특정 리포트ID의 낙상 상세 이력",
-      operationId = "getHistory",
       security = @SecurityRequirement(name = "BearerAuth")
   )
-  @GetMapping("/history/{reportId}")
-  public ResponseEntity<?> getHistoryDetail(@PathVariable("reportId") Long reportId){
-    return ResponseEntity.ok("hi");
+  @GetMapping("/{reportId}")
+  public ResponseEntity<ApiResponseDto<HistoryDetailResponseDto>> getHistoryDetail(@PathVariable("reportId") Long reportId) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String userId = authentication.getName();
+
+    HistoryDetailResponseDto detail = historyService.getHistoryDetailByReportIdAndUserId(reportId, userId);
+
+    return ResponseEntity.ok(ApiResponseDto.success(detail));
   }
+
 
 }
