@@ -42,6 +42,8 @@ public class MypageService {
         user.getWeight(),
         user.getBloodtype(),
         user.getDisease(),
+        user.getAllergic(),
+        user.getMedicine(),
         user.getHospitalName()
     );
 
