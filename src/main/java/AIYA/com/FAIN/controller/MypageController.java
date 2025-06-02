@@ -7,6 +7,7 @@ import AIYA.com.FAIN.jwt.JwtUtil;
 import AIYA.com.FAIN.service.MypageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,7 +27,7 @@ public class MypageController {
   }
 
   // 마이페이지 조회 api
-  @Operation(summary = "마이페이지 조회",description = "JWT토큰을 헤더에 담아 해당 유저의 마이페이지를 조회한다.")
+  @Operation(summary = "마이페이지 조회",description = "JWT토큰을 헤더에 담아 해당 유저의 마이페이지를 조회한다.",security = { @SecurityRequirement(name = "BearerAuth") })
   @GetMapping("/api/v1/mypage")
   public ResponseEntity<ApiResponseDto<MypageResponseDto>> getMypage(@Parameter(
       name = "Authorization",
@@ -47,7 +48,7 @@ public class MypageController {
   }
 
   // 마이페이지 정보수정 api
-  @Operation(summary = "마이페이지 정보 수정",description = "JWT 토큰을 헤더에 담아 해당 유저의 정보를 수정한다.")
+  @Operation(summary = "마이페이지 정보 수정",description = "JWT 토큰을 헤더에 담아 해당 유저의 정보를 수정한다.",security = { @SecurityRequirement(name = "BearerAuth") })
   @PatchMapping("/api/v1/updateProfiles")
   public ResponseEntity<ApiResponseDto<Void>> updateProfiles(@Parameter(
       name = "Authorization",
