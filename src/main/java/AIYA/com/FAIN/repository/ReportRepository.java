@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReportRepository extends JpaRepository<Reports,Long> {
   List<Reports> findAllByUserId(Integer id);
-
+  List<Reports> findAllByUser(Users user);
   Optional<Reports> findByReportIdAndUserId(Long reportId, Integer id);
+
 
 }
