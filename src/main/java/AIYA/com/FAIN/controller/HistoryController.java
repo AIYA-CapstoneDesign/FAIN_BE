@@ -34,6 +34,8 @@ public class HistoryController {
 
       description = "유저 ID를 통해 이력 리스트를 조회한다. (JWT 인증 필요)",
 
+      operationId = "getHistory",
+
       security = { @SecurityRequirement(name = "BearerAuth") }
   )
 
@@ -66,6 +68,7 @@ public class HistoryController {
   @Operation(
       summary = "히스토리 상세 조회",
       description = "특정 리포트ID의 낙상 상세 이력",
+      operationId = "getHistory",
       security = @SecurityRequirement(name = "BearerAuth")
   )
   @GetMapping("/history/{reportId}")
