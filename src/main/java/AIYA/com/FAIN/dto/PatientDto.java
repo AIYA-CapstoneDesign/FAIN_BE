@@ -1,5 +1,6 @@
 package AIYA.com.FAIN.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class PatientDto {
   private String weight;
   private String bloodtype;
   private String disease;
+  @JsonProperty("hospitalName")
   private String hospitalName;
 
 }
