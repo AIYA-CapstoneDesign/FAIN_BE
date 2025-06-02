@@ -24,7 +24,7 @@ public class HistoryService {
     Users user = userRepository.findByUserId(userId)
         .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다: " + userId));
     Integer id = user.getId();
-    List<Reports> reports = reportRepository.findAllByUserId(id);
+    List<Reports> reports = reportRepository.findAllByUser(user);
 
     return reports.stream().map(r -> new HistoryResponseDto(
         r.getReportId().toString(),
