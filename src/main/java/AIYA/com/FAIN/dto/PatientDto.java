@@ -18,6 +18,8 @@ public class PatientDto {
   private String weight;
   private String bloodtype;
   private String disease;
+  private String allergic;
+  private String medicine;
   @JsonProperty("hospitalName")
   private String hospitalName;
 
