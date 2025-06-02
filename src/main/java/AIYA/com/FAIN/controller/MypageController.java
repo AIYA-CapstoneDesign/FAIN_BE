@@ -48,7 +48,7 @@ public class MypageController {
   }
 
   // 마이페이지 정보수정 api
-  @Operation(summary = "마이페이지 정보 수정",description = "JWT 토큰을 헤더에 담아 해당 유저의 정보를 수정한다.",security = { @SecurityRequirement(name = "BearerAuth") })
+  @Operation(summary = "마이페이지 정보수정",description = "JWT 토큰을 헤더에 담아 해당 유저의 정보를 수정한다.",security = { @SecurityRequirement(name = "BearerAuth") })
   @PatchMapping("/api/v1/updateProfiles")
   public ResponseEntity<ApiResponseDto<Void>> updateProfiles(@Parameter(
       name = "Authorization",

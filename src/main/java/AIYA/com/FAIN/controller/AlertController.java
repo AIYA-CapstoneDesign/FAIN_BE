@@ -7,7 +7,7 @@ import AIYA.com.FAIN.entity.Users;
 import AIYA.com.FAIN.repository.FallAlertRepository;
 import AIYA.com.FAIN.repository.UserRepository;
 import AIYA.com.FAIN.service.FcmService;
-import io.swagger.v3.oas.annotations.Operation;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +29,7 @@ public class AlertController {
     this.userRepository = userRepository;
   }
 
-  @Operation(summary = "알림 생성", description = "낙상 감지시 사진 및 정보를 reports에 저장 후 해당 유저로 알림 전송")
+
   @PostMapping("/api/v1/notification/creates")
   public ResponseEntity<ApiResponseDto<Map<String,Long>>> notifyFall(@io.swagger.v3.oas.annotations.parameters.RequestBody(
       description = "낙상 감지 시 전달받는 사진 및 유저 아이디 정보",
