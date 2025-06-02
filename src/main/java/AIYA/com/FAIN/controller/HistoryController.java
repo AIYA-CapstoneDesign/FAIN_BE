@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/v1")
 public class HistoryController {
 
   private final HistoryService historyService;
@@ -36,7 +37,7 @@ public class HistoryController {
       security = { @SecurityRequirement(name = "BearerAuth") }
   )
 
-  @GetMapping("api/v1/history")
+  @GetMapping("/history")
 
   public ResponseEntity<ApiResponseDto<List<HistoryResponseDto>>> getHistory() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -53,7 +54,7 @@ public class HistoryController {
       description = "특정 리포트ID의 낙상 상세 이력",
       security = @SecurityRequirement(name = "BearerAuth")
   )
-  @GetMapping("api/v1/history/{reportId}")
+  @GetMapping("/history/{reportId}")
   public ResponseEntity<ApiResponseDto<HistoryDetailResponseDto>> getHistoryDetail(@PathVariable Long reportId) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String userId = authentication.getName();
