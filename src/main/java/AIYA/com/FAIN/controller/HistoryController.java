@@ -11,10 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
 public class HistoryController {
 
   private final HistoryService historyService;
@@ -28,7 +30,7 @@ public class HistoryController {
       description = "유저 ID를 통해 이력 리스트를 조회한다. (JWT 인증 필요)",
       security =  @SecurityRequirement(name = "BearerAuth"))
 
-  @GetMapping("api/v1/history")
+  @GetMapping("/history")
   public ResponseEntity<ApiResponseDto<List<HistoryResponseDto>>> getHistory() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String userId = authentication.getName();
