@@ -43,7 +43,7 @@ public class SecurityConfig {
     CorsConfiguration configuration = new CorsConfiguration();
     configuration.addAllowedOrigin("http://localhost:5173");
     configuration.addAllowedOrigin("https://fain-aiya.shop");
-    configuration.addAllowedOrigin("https://fain-fe.vercel.app");
+    configuration.addAllowedOriginPattern("https://fain-fe.vercel.app");
     configuration.addExposedHeader("Authorization");
     configuration.addAllowedHeader("*");
     configuration.addAllowedMethod("*");
