@@ -49,19 +49,28 @@ public class HistoryController {
   }
 
   // 히스토리 상세조회
+//  @Operation(
+//      summary = "히스토리 상세 조회",
+//      description = "특정 리포트ID의 낙상 상세 이력",
+//      security = @SecurityRequirement(name = "BearerAuth")
+//  )
+//  @GetMapping("/history/{reportId}")
+//  public ResponseEntity<ApiResponseDto<HistoryDetailResponseDto>> getHistoryDetail(@PathVariable("reportId") Long reportId) {
+////    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+////    String userId = authentication.getName();
+////
+////    HistoryDetailResponseDto detail = historyService.getHistoryDetailByReportIdAndUserId(reportId, userId);
+//
+////    return ResponseEntity.ok(ApiResponseDto.success(detail));
+//  }
   @Operation(
       summary = "히스토리 상세 조회",
       description = "특정 리포트ID의 낙상 상세 이력",
       security = @SecurityRequirement(name = "BearerAuth")
   )
   @GetMapping("/history/{reportId}")
-  public ResponseEntity<ApiResponseDto<HistoryDetailResponseDto>> getHistoryDetail(@PathVariable("reportId") Long reportId) {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String userId = authentication.getName();
-
-    HistoryDetailResponseDto detail = historyService.getHistoryDetailByReportIdAndUserId(reportId, userId);
-
-    return ResponseEntity.ok(ApiResponseDto.success(detail));
+  public ResponseEntity<?> getHistoryDetail(@PathVariable("reportId") Long reportId){
+    return ResponseEntity.ok("hi");
   }
 
 }
