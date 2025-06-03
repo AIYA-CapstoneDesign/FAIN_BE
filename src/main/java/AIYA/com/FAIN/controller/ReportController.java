@@ -1,6 +1,8 @@
 package AIYA.com.FAIN.controller;
 
 import AIYA.com.FAIN.dto.ApiResponseDto;
+import AIYA.com.FAIN.dto.ReportRequestDto;
+import AIYA.com.FAIN.dto.ReportResponseDto;
 import AIYA.com.FAIN.dto.UpdateActionDto;
 import AIYA.com.FAIN.dto.UserDetailResponseDto;
 import AIYA.com.FAIN.jwt.JwtUtil;
@@ -66,8 +68,21 @@ public class ReportController {
       security = @SecurityRequirement(name = "BearerAuth")
   )
   @GetMapping("/reports/{reportId}")
-  public ResponseEntity<ApiResponseDto<?>> getReports(@PathVariable Long reportId){
+  public ResponseEntity<ApiResponseDto<?>> getReports(@PathVariable Long reportId) throws Exception{
+    //유저 찾기
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String userId = authentication.getName();
 
+    //user와 report가지고 GPT에 보내기
+    ReportRequestDto reportRequestDto = reportService.getPrompt(userId,reportId);
+
+    //응답 받아오기
+    String gptResponse = ;
+
+    //DB에 응답 저장하고 reportResponseDto에 report담기
+    ReportResponseDto reportResponseDto = reportService.updateAndGetReport(reportId,userId,gptResponse);
+    //response 프론트로 return 하기
+    return  ResponseEntity.ok(ApiResponseDto.success(reportResponseDto));
 
   }
 

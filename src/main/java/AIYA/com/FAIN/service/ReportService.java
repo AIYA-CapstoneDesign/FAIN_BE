@@ -1,5 +1,7 @@
 package AIYA.com.FAIN.service;
 
+import AIYA.com.FAIN.dto.ReportRequestDto;
+import AIYA.com.FAIN.dto.ReportResponseDto;
 import AIYA.com.FAIN.dto.UserDetailResponseDto;
 import AIYA.com.FAIN.entity.ActionType;
 import AIYA.com.FAIN.entity.Reports;
@@ -8,6 +10,9 @@ import AIYA.com.FAIN.error.ErrorCode;
 import AIYA.com.FAIN.error.exception.CustomException;
 import AIYA.com.FAIN.repository.ReportRepository;
 import AIYA.com.FAIN.repository.UserRepository;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +42,47 @@ public class ReportService {
         .build();
 
   }
+  @Transactional
+  public ReportRequestDto getPrompt(String userId,Long reportId){
+    Users users = userRepository.findByUserId(userId)
+        .orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER));
+    Reports reports = reportRepository.findByReportIdAndUser(reportId,users)
+        .orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_REPORTS));
+    List<Reports> reportsList = reportRepository.findAllByUser(users);
+    List<String> reportHistories = reportsList.stream()
+        .map(Reports::getReport)
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
+
+    return ReportRequestDto.builder()
+        .name(users.getName())
+        .birth(users.getBirth())
+        .height(users.getHeight())
+        .weight(users.getWeight())
+        .medicine(users.getMedicine())
+        .disease(users.getDisease())
+        .allergic(users.getAllergic())
+        .situationImg(reports.getSituationImg())
+        .situationTime(reports.getSituationTime())
+        .reportHistories(reportHistories)
+        .build();
+  }
+
+  @Transactional
+  public ReportResponseDto updateAndGetReport(Long reportId,String userId,String gptResponse){
+    Users users = userRepository.findByUserId(userId)
+        .orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER));
+    Reports reports = reportRepository.findByReportIdAndUser(reportId,users)
+        .orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_REPORTS));
+
+    reports.updateReports(gptResponse);
+
+
+    return ReportResponseDto.builder()
+        .situationTime(reports.getSituationTime())
+        .report(reports.getReport())
+        .build();
+  }
 
   @Transactional
   public void updateAction(Long reportId, ActionType actionType){
@@ -44,5 +90,6 @@ public class ReportService {
         .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_REPORTS));
     reports.updateAction(actionType);
   }
+
 
 }
