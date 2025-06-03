@@ -19,7 +19,7 @@ public class FcmService {
 
     // 유저의 fcm 토큰 찾기
     FcmToken fcmToken = fcmTokenRepository.findByUserId(userId)
-        .orElseThrow(() -> new IllegalArgumentException("FCM토큰을 찾을 수 없음"));
+        .orElseThrow(() -> new IllegalArgumentException("FCM 토큰을 찾을 수 없음"));
 
     // 메시지 생성
     Message message = Message.builder()
