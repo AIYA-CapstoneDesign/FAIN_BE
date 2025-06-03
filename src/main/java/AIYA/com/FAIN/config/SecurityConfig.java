@@ -41,8 +41,8 @@ public class SecurityConfig {
   public CorsConfigurationSource corsConfigurationSource() {
     //CORS 허용 주소들
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.addAllowedOrigin("http://localhost:5173");
-    configuration.addAllowedOrigin("https://fain-aiya.shop");
+    configuration.addAllowedOriginPattern("http://localhost:5173");
+    configuration.addAllowedOriginPattern("https://fain-aiya.shop");
     configuration.addAllowedOriginPattern("https://fain-fe.vercel.app");
     configuration.addExposedHeader("Authorization");
     configuration.addAllowedHeader("*");
