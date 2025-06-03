@@ -15,7 +15,7 @@ public class FcmService {
 
   private final FcmTokenRepository fcmTokenRepository;
 
-  public void sendMessage(String userId) {
+  public void sendMessage(String userId, Long reportId) {
 
     // 유저의 fcm 토큰 찾기
     FcmToken fcmToken = fcmTokenRepository.findByUserId(userId)
@@ -24,7 +24,8 @@ public class FcmService {
     // 메시지 생성
     Message message = Message.builder()
         .setToken(fcmToken.getToken())
-        .setNotification(Notification.builder().setBody("낙상이 감지되었습니다").build())
+        .setNotification(Notification.builder().setBody("낙상이 감지되었습니다.")  // 사용자용 메세지
+        .build()).putData("reportId", reportId.toString())
         .build();
 
     // fcm 서버로 메시지 전송
