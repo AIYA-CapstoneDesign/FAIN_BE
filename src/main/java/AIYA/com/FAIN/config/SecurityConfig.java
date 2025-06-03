@@ -37,22 +37,22 @@ public class SecurityConfig {
     return configuration.getAuthenticationManager();
   }
 
-  @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
-    //CORS 허용 주소들
-    CorsConfiguration configuration = new CorsConfiguration();
-    configuration.addAllowedOriginPattern("http://localhost:5173");
-    configuration.addAllowedOriginPattern("https://fain-aiya.shop");
-    configuration.addAllowedOriginPattern("https://fain-fe.vercel.app");
-    configuration.addExposedHeader("Authorization");
-    configuration.addAllowedHeader("*");
-    configuration.addAllowedMethod("*");
-    configuration.setAllowCredentials(true);
-
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
-  }
+//  @Bean
+//  public CorsConfigurationSource corsConfigurationSource() {
+//    //CORS 허용 주소들
+//    CorsConfiguration configuration = new CorsConfiguration();
+//    configuration.addAllowedOriginPattern("http://localhost:5173");
+//    configuration.addAllowedOriginPattern("https://fain-aiya.shop");
+//    configuration.addAllowedOriginPattern("https://fain-fe.vercel.app");
+//    configuration.addExposedHeader("Authorization");
+//    configuration.addAllowedHeader("*");
+//    configuration.addAllowedMethod("*");
+//    configuration.setAllowCredentials(true);
+//
+//    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//    source.registerCorsConfiguration("/**", configuration);
+//    return source;
+//  }
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil) throws Exception {
