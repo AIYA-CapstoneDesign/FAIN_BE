@@ -1,7 +1,9 @@
 package AIYA.com.FAIN.service;
 
 import AIYA.com.FAIN.entity.FcmToken;
+import AIYA.com.FAIN.entity.Users;
 import AIYA.com.FAIN.repository.FcmTokenRepository;
+import AIYA.com.FAIN.repository.UserRepository;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
@@ -16,11 +18,15 @@ import org.springframework.stereotype.Service;
 public class FcmService {
 
   private final FcmTokenRepository fcmTokenRepository;
+  private final UserRepository userRepository;
 
   public void sendMessage(String userId, Long reportId) {
 
+    //유저아이디로 유저 엔티티 가져오기
+    Users user = userRepository.findByUserId(userId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+
     //fcm token 모두 찾기
-    List<FcmToken> tokens = fcmTokenRepository.findAllByUserId(userId);
+    List<FcmToken> tokens = fcmTokenRepository.findAllByUser(user);
 
 
     if(tokens.isEmpty()){
@@ -61,11 +67,15 @@ public class FcmService {
 
   }
   //중복검사하여 토큰 저장
-  public void registerToken(String userId, String token){
-    boolean exists = fcmTokenRepository.findByUserIdAndToken(userId, token).isPresent();
-    if(!exists){
-      FcmToken fcmToken = new FcmToken(userId, token);
-      fcmTokenRepository.save(fcmToken);
-    }
+  public void registerToken(String userId, String token) {
+    Users user = userRepository.findByUserId(userId)
+        .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+
+    // 기존 해당 유저의 모든 토큰 삭제 (1개만 유지할 거니까)
+    fcmTokenRepository.deleteAllByUser(user);
+
+    // 새 토큰 저장
+    FcmToken fcmToken = new FcmToken(user, token);
+    fcmTokenRepository.save(fcmToken);
   }
 }
