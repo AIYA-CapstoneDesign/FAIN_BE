@@ -1,5 +1,6 @@
 package AIYA.com.FAIN.controller;
 
+import AIYA.com.FAIN.client.PythonApiClient;
 import AIYA.com.FAIN.dto.ApiResponseDto;
 import AIYA.com.FAIN.dto.ReportRequestDto;
 import AIYA.com.FAIN.dto.ReportResponseDto;
@@ -30,9 +31,12 @@ public class ReportController {
   private final JwtUtil jwtUtil;
   private final ReportService reportService;
 
-  public ReportController(JwtUtil jwtUtil, ReportService reportService) {
+  private final PythonApiClient pythonApiClient;
+
+  public ReportController(JwtUtil jwtUtil, ReportService reportService,PythonApiClient pythonApiClient) {
     this.jwtUtil = jwtUtil;
     this.reportService = reportService;
+    this.pythonApiClient = pythonApiClient;
   }
 
   @Operation(
@@ -77,7 +81,7 @@ public class ReportController {
     ReportRequestDto reportRequestDto = reportService.getPrompt(userId,reportId);
 
     //응답 받아오기
-    String gptResponse = ;
+    String gptResponse = pythonApiClient.gptReport(reportRequestDto);
 
     //DB에 응답 저장하고 reportResponseDto에 report담기
     ReportResponseDto reportResponseDto = reportService.updateAndGetReport(reportId,userId,gptResponse);
