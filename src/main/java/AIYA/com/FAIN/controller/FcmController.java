@@ -3,7 +3,6 @@ package AIYA.com.FAIN.controller;
 import AIYA.com.FAIN.dto.ApiResponseDto;
 import AIYA.com.FAIN.dto.FcmTokenRequestDto;
 import AIYA.com.FAIN.jwt.JwtUtil;
-import AIYA.com.FAIN.repository.FcmTokenRepository;
 import AIYA.com.FAIN.service.FcmService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,6 +34,9 @@ public class FcmController {
   )@RequestHeader("Authorization") String JwtToken, @RequestBody FcmTokenRequestDto dto) {
     String jwtToken = JwtToken.substring(7);
     String userId = jwtUtil.getUserIdFromToken(jwtToken);
+
+    System.out.println("등록할 FCM 토큰: " + dto.getToken());
+    System.out.println("JWT에서 추출한 userId: " + userId);
 
     // 중복 등록 방지 : 이미 존재하는 토큰이면 저장하지 않음
     fcmService.registerToken(userId, dto.getToken());

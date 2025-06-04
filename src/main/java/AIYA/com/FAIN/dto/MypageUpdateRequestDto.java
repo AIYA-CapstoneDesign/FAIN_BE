@@ -29,6 +29,8 @@ public class MypageUpdateRequestDto {
   private String medicine;
   @JsonProperty("hospitalName")
   private String hospitalName;
+  @JsonProperty("hospitalTel")
+  private String hospitalTel;
 
 
 }
