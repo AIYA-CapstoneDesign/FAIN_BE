@@ -18,7 +18,7 @@ public class FcmService {
 
   public void sendMessage(String userId, Long reportId) {
 
-
+    //fcm token 모두 찾기
     List<FcmToken> tokens = fcmTokenRepository.findAllByUserId(userId);
 
 
