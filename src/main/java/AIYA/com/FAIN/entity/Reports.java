@@ -55,4 +55,11 @@ public class Reports {
 
   }
 
+  public void updateReports(String gptResponse){
+    if(this.report != null){
+      throw new IllegalArgumentException("이미 생성된 리포트입니다.");
+    }
+    this.report = gptResponse;
+  }
+
 }
