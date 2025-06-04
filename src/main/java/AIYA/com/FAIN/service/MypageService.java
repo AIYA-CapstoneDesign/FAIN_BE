@@ -44,7 +44,8 @@ public class MypageService {
         user.getDisease(),
         user.getAllergic(),
         user.getMedicine(),
-        user.getHospitalName()
+        user.getHospitalName(),
+        user.getHospitalTel()
     );
 
     return new MypageResponseDto(guardianDto, patientDto);
@@ -87,6 +88,9 @@ public class MypageService {
     }
     if(dto.getHospitalName() != null) {
       users.setHospitalName(dto.getHospitalName());
+    }
+    if(dto.getHospitalTel() != null){
+      users.setHospitalTel(dto.getHospitalTel());
     }
   }
 

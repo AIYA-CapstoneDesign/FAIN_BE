@@ -48,7 +48,7 @@ public class AlertController {
     fallAlertRepository.save(reports);
 
     // 알림 전송
-    fcmService.sendMessage(dto.getUserId());
+    fcmService.sendMessage(dto.getUserId(), reports.getReportId());
 
     Map<String,Long> data = new HashMap<>();
     data.put("reportId", reports.getReportId());

@@ -8,6 +8,5 @@ import lombok.Setter;
 @Setter
 public class FcmTokenRequestDto {
   private String token;
-  private String userId;
 
 }
