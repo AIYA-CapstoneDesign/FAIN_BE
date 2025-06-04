@@ -35,6 +35,7 @@ public class UserService {
         dto.getBloodtype(),
         dto.getMedicine(),
         dto.getHospitalName(),
+        dto.getHospitalTel(),
         dto.getDisease(),
         dto.getAllergic()
     );

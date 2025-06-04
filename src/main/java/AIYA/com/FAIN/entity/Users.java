@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor // 모든 필드를 파라미터로 받는 생성자
 public class Users {
   public Users(String userId, String password, String fName, String fTel, String name, LocalDate birth,
-      String address, String height, String weight, String bloodtype, String medicine, String hospitalName, String disease, String allergic ){
+      String address, String height, String weight, String bloodtype, String medicine, String hospitalName, String hospitalTel, String disease, String allergic ){
     this.userId = userId;
     this.password = password;
     this.fName = fName;
@@ -33,6 +33,7 @@ public class Users {
     this.bloodtype = bloodtype;
     this.medicine = medicine;
     this.hospitalName = hospitalName;
+    this.hospitalTel = hospitalTel;
     this.disease = disease;
     this.allergic = allergic;
 
@@ -74,6 +75,8 @@ public class Users {
 
   @Column(name = "hospital_name")
   private String hospitalName;
+
+  private String hospitalTel;
 
   private String disease;
 

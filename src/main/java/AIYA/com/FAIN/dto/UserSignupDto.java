@@ -26,6 +26,8 @@ public class UserSignupDto {
   private String medicine;
   @JsonProperty("hospitalName")
   private String hospitalName;
+  @JsonProperty("hospitalTel")
+  private String hospitalTel;
   private String disease;
   private String allergic;
 }
