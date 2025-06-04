@@ -25,7 +25,7 @@ public class SwaggerConfig {
 
   @Bean
   public OpenAPI openAPI() {
-    log.info("✅ SwaggerConfig:OpenAPI Bean 생성됨");
+    log.info("✅ SwaggerConfig:OpenAPI Bean 생성됨!");
 
     return new OpenAPI()
         .components(new Components())

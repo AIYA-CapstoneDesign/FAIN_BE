@@ -37,26 +37,28 @@ public class SecurityConfig {
     return configuration.getAuthenticationManager();
   }
 
-  @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-    configuration.addAllowedOrigin("http://localhost:5173");
-    configuration.addAllowedOrigin("https://fain-aiya.shop");
-    configuration.addAllowedOrigin("https://fain-fe.vercel.app");
-    configuration.addExposedHeader("Authorization");
-    configuration.addAllowedHeader("*");
-    configuration.addAllowedMethod("*");
-    configuration.setAllowCredentials(true);
-
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
-  }
+//  @Bean
+//  public CorsConfigurationSource corsConfigurationSource() {
+//    //CORS 허용 주소들
+//    CorsConfiguration configuration = new CorsConfiguration();
+//    configuration.addAllowedOriginPattern("http://localhost:5173");
+//    configuration.addAllowedOriginPattern("https://fain-aiya.shop");
+//    configuration.addAllowedOriginPattern("https://fain-fe.vercel.app");
+//    configuration.addExposedHeader("Authorization");
+//    configuration.addAllowedHeader("*");
+//    configuration.addAllowedMethod("*");
+//    configuration.setAllowCredentials(true);
+//
+//    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//    source.registerCorsConfiguration("/**", configuration);
+//    return source;
+//  }
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil) throws Exception {
     // crsf disable
-    http.cors().configurationSource(corsConfigurationSource());
+//    http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+    http.cors((cors) -> cors.disable());
     http.csrf((auth) -> auth.disable());
     // From 로그인 방식 disable (spring security 자체에서 제공하는 login api 끄기)
     http.formLogin((auth) -> auth.disable());
