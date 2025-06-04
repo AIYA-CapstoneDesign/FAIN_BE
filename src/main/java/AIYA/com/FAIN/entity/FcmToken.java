@@ -5,15 +5,25 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity // 자바 객체를 DB에 연동해주는
+@Table(name="fcm_tokens", uniqueConstraints = {@UniqueConstraint(columnNames = {"userId","token"})})
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class FcmToken {
+
+  public FcmToken(String userId, String token) {
+    this.userId = userId;
+    this.token = token;
+  }
 
   @Id // 기본키
   @GeneratedValue(strategy = GenerationType.IDENTITY)
