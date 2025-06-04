@@ -32,8 +32,6 @@ public class ReportRequestDto {
 
   private String allergic;
 
-  //리포트 관련정보
-  private String situationImg;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime situationTime;

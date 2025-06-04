@@ -62,7 +62,6 @@ public class ReportService {
         .medicine(users.getMedicine())
         .disease(users.getDisease())
         .allergic(users.getAllergic())
-        .situationImg(reports.getSituationImg())
         .situationTime(reports.getSituationTime())
         .reportHistories(reportHistories)
         .build();
