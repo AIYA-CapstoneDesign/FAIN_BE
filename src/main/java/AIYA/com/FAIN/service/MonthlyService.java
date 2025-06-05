@@ -25,6 +25,7 @@ public class MonthlyService {
   private final ReportRepository reportRepository;
   private final MonthlyReportRepository monthlyReportRepository;
 
+  @Transactional
   public CountResponseDto getCount(String userId,Integer year,Integer month){
     Users users = userRepository.findByUserId(userId)
         .orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER));
@@ -35,14 +36,18 @@ public class MonthlyService {
         ActionType.FAMILY);
     MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month)
         .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MONTHLY));
-    monthlyReports.updateCount(fallCount,hCount,pCount);
+//    monthlyReports.updateCount(fallCount,hCount,pCount);
+    monthlyReports.setFallCount(fallCount);
+    monthlyReports.setHCount(hCount);
+    monthlyReports.setPCount(pCount);
+    monthlyReportRepository.save(monthlyReports);
     return CountResponseDto.builder()
         .fallCount(fallCount)
         .hCount(hCount)
         .pCount(pCount)
         .build();
   }
-
+  @Transactional
   public GraphResponseDto getGraph(String userId,Integer year,Integer month){
     Users users = userRepository.findByUserId(userId)
         .orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER));
@@ -52,7 +57,13 @@ public class MonthlyService {
     Integer nightCount = reportRepository.countFallsBetweenHours(users.getId(),year,month,18,24);
     MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month)
         .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MONTHLY));
-    monthlyReports.updateGraph(dawnCount,morningCount,afternoonCount,nightCount);
+//    monthlyReports.updateGraph(dawnCount,morningCount,afternoonCount,nightCount);
+    monthlyReports.setDawn(dawnCount);
+    monthlyReports.setMorning(morningCount);
+    monthlyReports.setAfternoon(afternoonCount);
+    monthlyReports.setNight(nightCount);
+    monthlyReportRepository.save(monthlyReports);
+
     return GraphResponseDto.builder()
         .dawn(dawnCount)
         .morning(morningCount)
@@ -60,7 +71,7 @@ public class MonthlyService {
         .night(nightCount)
         .build();
   }
-
+  @Transactional
   public MonthlyRequestDto getMonthlyPrompt(String userId,Integer year,Integer month){
     Users users = userRepository.findByUserId(userId)
         .orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER));
@@ -70,6 +81,7 @@ public class MonthlyService {
     Integer pCount = reportRepository.countByUserAndYearAndMonthAndActionType(users,year,month,
         ActionType.FAMILY);
     List<String> monthlyReportList = reportRepository.findAllReportContentsByUserAndYearAndMonth(users,year,month);
+
 
     return MonthlyRequestDto.builder()
         .name(users.getName())
@@ -93,7 +105,10 @@ public class MonthlyService {
 
     MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month)
         .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MONTHLY));
-    monthlyReports.updateAiComment(gptMonthResponse);
+//    monthlyReports.updateAiComment(gptMonthResponse);
+    monthlyReports.setAiComment(gptMonthResponse);
+    monthlyReportRepository.save(monthlyReports);
+
 
     return MonthlyResponseDto.builder()
         .aiComment(gptMonthResponse)

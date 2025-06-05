@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/month")
 public class MonthlyController {
   private final JwtUtil jwtUtil;
   private MonthlyService monthlyService;

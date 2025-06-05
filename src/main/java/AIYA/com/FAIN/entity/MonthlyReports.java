@@ -46,7 +46,7 @@ public class MonthlyReports {
   @Column(nullable = true,name="p_count")
   private Integer pCount;
 
-  @Column(nullable = true,name="ai_comment")
+  @Column(nullable = true,name="ai_comment" ,columnDefinition = "LONGTEXT")
   private String aiComment;
 
   @Column(nullable = true)
@@ -81,7 +81,21 @@ public class MonthlyReports {
     this.night = night;
   }
 
+  public void setDawn(Integer dawn) {
+    this.dawn = dawn;
+  }
 
+  public void setMorning(Integer morning) {
+    this.morning = morning;
+  }
+
+  public void setAfternoon(Integer afternoon) {
+    this.afternoon = afternoon;
+  }
+
+  public void setNight(Integer night) {
+    this.night = night;
+  }
 
   public MonthlyReports(Users user, Integer year, Integer month) {
     this.user = user;
