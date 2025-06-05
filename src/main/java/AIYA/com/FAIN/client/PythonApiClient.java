@@ -15,8 +15,8 @@ import org.springframework.web.client.RestTemplate;
 public class PythonApiClient {
   private final RestTemplate restTemplate;
 
-  private final String pythonServerUrl = "http://localhost:8000/report";
-//  private final String pythonServerUrl = "http://python:8000/report";
+//  private final String pythonServerUrl = "http://localhost:8000/report";
+  private final String pythonServerUrl = "http://python:8000/report";
 
   public String gptReport(ReportRequestDto requestDto){
     HttpHeaders headers = new HttpHeaders();
