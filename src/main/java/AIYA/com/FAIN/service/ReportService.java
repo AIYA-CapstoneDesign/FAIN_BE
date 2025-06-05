@@ -42,6 +42,7 @@ public class ReportService {
         .build();
 
   }
+  //prompt에 쓸 데이터 생성
   @Transactional
   public ReportRequestDto getPrompt(String userId,Long reportId){
     Users users = userRepository.findByUserId(userId)
