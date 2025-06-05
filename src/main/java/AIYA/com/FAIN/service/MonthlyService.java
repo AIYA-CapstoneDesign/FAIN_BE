@@ -106,9 +106,9 @@ public class MonthlyService {
     MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month)
         .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MONTHLY));
 //    monthlyReports.updateAiComment(gptMonthResponse);
-
+    monthlyReports.setAiComment(gptMonthResponse);
     monthlyReportRepository.save(monthlyReports);
-    monthlyReports.setGptReport(gptMonthResponse);
+
 
     return MonthlyResponseDto.builder()
         .aiComment(gptMonthResponse)

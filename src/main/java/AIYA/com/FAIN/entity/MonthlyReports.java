@@ -46,7 +46,7 @@ public class MonthlyReports {
   @Column(nullable = true,name="p_count")
   private Integer pCount;
 
-  @Column(nullable = true,name="ai_comment")
+  @Column(nullable = true,name="ai_comment" ,columnDefinition = "LONGTEXT")
   private String aiComment;
 
   @Column(nullable = true)
