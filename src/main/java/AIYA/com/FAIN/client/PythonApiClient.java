@@ -19,8 +19,8 @@ public class PythonApiClient {
 //  private final String pythonServerUrl = "http://localhost:8000/report";
   private final String pythonServerUrl = "http://python:8000/report";
 
-  private final String monthServerUrl = "http://localhost:8000/month";
-//  private final String monthServerUrl = "http://python:8000/month";
+//  private final String monthServerUrl = "http://localhost:8000/month";
+  private final String monthServerUrl = "http://python:8000/month";
 
 
   public String gptReport(ReportRequestDto requestDto){
