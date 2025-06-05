@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +24,10 @@ public class MonthlyReports {
   @Column(name="mr_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer mrId;
+
+  @ManyToOne
+  @JoinColumn(name = "id",referencedColumnName = "id",nullable = false)
+  private Users user;
 
   @Column(nullable = false)
   private Integer year;
@@ -43,17 +49,43 @@ public class MonthlyReports {
   @Column(nullable = true,name="ai_comment")
   private String aiComment;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private Integer dawn;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private Integer morning;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private Integer afternoon;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private Integer night;
 
+  public void updateAiComment(String gptResponse){
+    if(this.aiComment != null){
+      throw new IllegalStateException("이미 생성된 월간리포트입니다.");
+    }
+    this.aiComment = aiComment;
+  }
 
+  public void updateCount(Integer fallCount,Integer hCount,Integer pCount){
+    this.fallCount = fallCount;
+    this.hCount = hCount;
+    this.pCount = pCount;
+  }
+
+  public void updateGraph(Integer dawn,Integer morning, Integer afternoon, Integer night){
+    this.dawn = dawn;
+    this.morning = morning;
+    this.afternoon = afternoon;
+    this.night = night;
+  }
+
+
+
+  public MonthlyReports(Users user, Integer year, Integer month) {
+    this.user = user;
+    this.year = year;
+    this.month = month;
+  }
 }
