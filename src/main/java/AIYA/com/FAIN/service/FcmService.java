@@ -9,6 +9,7 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,7 +74,11 @@ public class FcmService {
     Users user = userRepository.findByUserId(userId)
         .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
 
-    // 기존 해당 유저의 모든 토큰 삭제 (1개만 유지할 거니까)
+    // 해당 토큰이 이미 DB에 존재하는지 확인 (다른 유저 것일 수 있음)
+    Optional<FcmToken> existingToken = fcmTokenRepository.findByToken(token);
+    existingToken.ifPresent(fcmTokenRepository::delete);
+
+    // 기존 유저의 토큰 삭제 (1개만 유지)
     fcmTokenRepository.deleteAllByUser(user);
 
     // 새 토큰 저장
