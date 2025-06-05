@@ -25,6 +25,7 @@ public class MonthlyService {
   private final ReportRepository reportRepository;
   private final MonthlyReportRepository monthlyReportRepository;
 
+  @Transactional
   public CountResponseDto getCount(String userId,Integer year,Integer month){
     Users users = userRepository.findByUserId(userId)
         .orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER));
@@ -42,7 +43,7 @@ public class MonthlyService {
         .pCount(pCount)
         .build();
   }
-
+  @Transactional
   public GraphResponseDto getGraph(String userId,Integer year,Integer month){
     Users users = userRepository.findByUserId(userId)
         .orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER));
@@ -60,7 +61,7 @@ public class MonthlyService {
         .night(nightCount)
         .build();
   }
-
+  @Transactional
   public MonthlyRequestDto getMonthlyPrompt(String userId,Integer year,Integer month){
     Users users = userRepository.findByUserId(userId)
         .orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER));
