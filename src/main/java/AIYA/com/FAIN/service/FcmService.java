@@ -11,6 +11,7 @@ import com.google.firebase.messaging.Notification;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 // 실제로 FCM 푸시 알림을 보내는 서비스
 @Service
@@ -67,6 +68,7 @@ public class FcmService {
 
   }
   //중복검사하여 토큰 저장
+  @Transactional
   public void registerToken(String userId, String token) {
     Users user = userRepository.findByUserId(userId)
         .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
