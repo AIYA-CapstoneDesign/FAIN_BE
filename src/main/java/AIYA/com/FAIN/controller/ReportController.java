@@ -1,6 +1,9 @@
 package AIYA.com.FAIN.controller;
 
+import AIYA.com.FAIN.client.PythonApiClient;
 import AIYA.com.FAIN.dto.ApiResponseDto;
+import AIYA.com.FAIN.dto.ReportRequestDto;
+import AIYA.com.FAIN.dto.ReportResponseDto;
 import AIYA.com.FAIN.dto.UpdateActionDto;
 import AIYA.com.FAIN.dto.UserDetailResponseDto;
 import AIYA.com.FAIN.jwt.JwtUtil;
@@ -28,9 +31,12 @@ public class ReportController {
   private final JwtUtil jwtUtil;
   private final ReportService reportService;
 
-  public ReportController(JwtUtil jwtUtil, ReportService reportService) {
+  private final PythonApiClient pythonApiClient;
+
+  public ReportController(JwtUtil jwtUtil, ReportService reportService,PythonApiClient pythonApiClient) {
     this.jwtUtil = jwtUtil;
     this.reportService = reportService;
+    this.pythonApiClient = pythonApiClient;
   }
 
   @Operation(
@@ -59,6 +65,32 @@ public class ReportController {
     return ResponseEntity.ok(ApiResponseDto.successMessage("조치방법이 저장되었습니다."));
 
   }
+
+  @Operation(
+      summary = "종합 리포트 조회",
+      description = "낙상 사진과 환자의 정보를 이용해 낙상 리포트를 조회합니다.",
+      security = @SecurityRequirement(name = "BearerAuth")
+  )
+  @GetMapping("/reports/{reportId}")
+  public ResponseEntity<ApiResponseDto<?>> getReports(@PathVariable Long reportId) throws Exception{
+    //유저 찾기
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String userId = authentication.getName();
+
+    //user와 report가지고 GPT에 보내기
+    ReportRequestDto reportRequestDto = reportService.getPrompt(userId,reportId);
+
+    //응답 받아오기
+    String gptResponse = pythonApiClient.gptReport(reportRequestDto);
+
+    //DB에 응답 저장하고 reportResponseDto에 report담기
+    ReportResponseDto reportResponseDto = reportService.updateAndGetReport(reportId,userId,gptResponse);
+    //response 프론트로 return 하기
+    return  ResponseEntity.ok(ApiResponseDto.success(reportResponseDto));
+
+  }
+
+
 
 
 

@@ -34,8 +34,9 @@ public class SwaggerConfig {
             .title("FAIN Swagger")
             .description("FAIN REST API")
             .version("1.0.0"))
-        .servers(List.of(
+      .servers(List.of(
             new Server().url("https://fain-aiya.shop").description("FAIN배포서버")
-        ));
+        )
+        );
   }
 }

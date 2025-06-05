@@ -11,5 +11,5 @@ public interface ReportRepository extends JpaRepository<Reports,Long> {
   List<Reports> findAllByUser(Users user);
   Optional<Reports> findByReportIdAndUserId(Long reportId, Integer id);
 
-
+  Optional<Reports> findByReportIdAndUser(Long reportId, Users users);
 }
