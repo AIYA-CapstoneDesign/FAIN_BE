@@ -37,6 +37,7 @@ public class MonthlyService {
     MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month)
         .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MONTHLY));
     monthlyReports.updateCount(fallCount,hCount,pCount);
+    monthlyReportRepository.save(monthlyReports);
     return CountResponseDto.builder()
         .fallCount(fallCount)
         .hCount(hCount)
@@ -54,6 +55,8 @@ public class MonthlyService {
     MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month)
         .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MONTHLY));
     monthlyReports.updateGraph(dawnCount,morningCount,afternoonCount,nightCount);
+    monthlyReportRepository.save(monthlyReports);
+
     return GraphResponseDto.builder()
         .dawn(dawnCount)
         .morning(morningCount)
@@ -71,6 +74,7 @@ public class MonthlyService {
     Integer pCount = reportRepository.countByUserAndYearAndMonthAndActionType(users,year,month,
         ActionType.FAMILY);
     List<String> monthlyReportList = reportRepository.findAllReportContentsByUserAndYearAndMonth(users,year,month);
+
 
     return MonthlyRequestDto.builder()
         .name(users.getName())
@@ -95,6 +99,8 @@ public class MonthlyService {
     MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month)
         .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MONTHLY));
     monthlyReports.updateAiComment(gptMonthResponse);
+    monthlyReportRepository.save(monthlyReports);
+
 
     return MonthlyResponseDto.builder()
         .aiComment(gptMonthResponse)
