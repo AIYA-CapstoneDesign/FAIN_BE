@@ -2,9 +2,11 @@ package AIYA.com.FAIN.controller;
 
 import AIYA.com.FAIN.dto.ApiResponseDto;
 import AIYA.com.FAIN.dto.FallAlertRequestDto;
+import AIYA.com.FAIN.entity.MonthlyReports;
 import AIYA.com.FAIN.entity.Reports;
 import AIYA.com.FAIN.entity.Users;
 import AIYA.com.FAIN.repository.FallAlertRepository;
+import AIYA.com.FAIN.repository.MonthlyReportRepository;
 import AIYA.com.FAIN.repository.UserRepository;
 import AIYA.com.FAIN.service.FcmService;
 
@@ -23,10 +25,13 @@ public class AlertController {
   private final FallAlertRepository fallAlertRepository;
   private final UserRepository userRepository;
 
-  public AlertController(FcmService fcmService, FallAlertRepository fallAlertRepository,UserRepository userRepository) {
+  private final MonthlyReportRepository monthlyReportRepository;
+
+  public AlertController(FcmService fcmService, FallAlertRepository fallAlertRepository,UserRepository userRepository,MonthlyReportRepository monthlyReportRepository) {
     this.fcmService = fcmService;
     this.fallAlertRepository = fallAlertRepository;
     this.userRepository = userRepository;
+    this.monthlyReportRepository = monthlyReportRepository;
   }
 
 
@@ -47,6 +52,14 @@ public class AlertController {
 
     fallAlertRepository.save(reports);
 
+    // ✅ 여기서 월간 리포트 생성
+    Integer year = reports.getSituationTime().getYear();
+    Integer month = reports.getSituationTime().getMonthValue();
+
+    if (!monthlyReportRepository.existsByUserAndYearAndMonth(user, year, month)) {
+      MonthlyReports monthlyReport = new MonthlyReports(user, year, month);
+      monthlyReportRepository.save(monthlyReport);
+    }
     // 알림 전송
     fcmService.sendMessage(dto.getUserId(), reports.getReportId());
 
