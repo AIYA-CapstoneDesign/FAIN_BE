@@ -1,6 +1,7 @@
 package AIYA.com.FAIN.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,7 +26,9 @@ public class MonthlyRequestDto {
   private String allergic;
 
   private Integer fallCount;
+  @JsonProperty("hCount")
   private Integer hCount;
+  @JsonProperty("pCount")
   private Integer pCount;
 
   //과거 해당 년 월의 리포트들

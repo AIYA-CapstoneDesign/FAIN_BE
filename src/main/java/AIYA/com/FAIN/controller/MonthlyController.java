@@ -65,16 +65,16 @@ public class MonthlyController {
       security = @SecurityRequirement(name = "BearerAuth")
   )
   @GetMapping("/reports")
-  public ResponseEntity<ApiResponseDto<?>> getMonthlyReports(@RequestParam("year") Integer year,@RequestParam("month") Integer month) throws Exception {
+  public ResponseEntity<ApiResponseDto<MonthlyResponseDto>> getMonthlyReports(@RequestParam("year") Integer year,@RequestParam("month") Integer month) throws Exception {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String userId = authentication.getName();
 
     //user와 해당년월의 report 가지고 GPT에 보내기
     MonthlyRequestDto requestDto = monthlyService.getMonthlyPrompt(userId,year,month);
     //응답 받아오기
-    String gptMonthResponse = pythonApiClient.
+    String gptMonthResponse = pythonApiClient.monthlyReport(requestDto);
     //DB에 응답 저장하고 MonthlyResponseDto에 Monthlyreport 담기
-    MonthlyResponseDto monthlyResponseDto = monthlyService.updateAndGetMonthlyReport(userId,gptMonthResponse);
+    MonthlyResponseDto monthlyResponseDto = monthlyService.updateAndGetMonthlyReport(userId,gptMonthResponse,year,month);
     //response 프론트로 return 하기
     return ResponseEntity.ok(ApiResponseDto.success(monthlyResponseDto));
 

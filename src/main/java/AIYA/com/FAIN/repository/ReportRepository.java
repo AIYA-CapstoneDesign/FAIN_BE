@@ -32,16 +32,16 @@ public interface ReportRepository extends JpaRepository<Reports,Long> {
       @Param("actionType") ActionType actionType);
 
   @Query(value = """
-  SELECT COUNT(*) FROM reports
-  WHERE r.user = :user
-    AND YEAR(situation_time) = :year
-    AND MONTH(situation_time) = :month
-    AND HOUR(situation_time) >= :startHour
-    AND HOUR(situation_time) < :endHour
+  SELECT COUNT(*) FROM reports r
+  WHERE r.id = :userId
+    AND YEAR(r.situation_time) = :year
+    AND MONTH(r.situation_time) = :month
+    AND HOUR(r.situation_time) >= :startHour
+    AND HOUR(r.situation_time) < :endHour
 """, nativeQuery = true)
-  Integer countFallsBetweenHours(@Param("user") Users user,
-      @Param("year") int year,
-      @Param("month") int month,
+  Integer countFallsBetweenHours(@Param("userId") Integer userId,
+      @Param("year") Integer year,
+      @Param("month") Integer month,
       @Param("startHour") int startHour,
       @Param("endHour") int endHour);
 
