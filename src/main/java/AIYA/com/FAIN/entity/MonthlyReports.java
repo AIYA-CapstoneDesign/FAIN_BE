@@ -55,5 +55,11 @@ public class MonthlyReports {
   @Column(nullable = false)
   private Integer night;
 
+  public void updateAiComment(String gptResponse){
+    if(this.aiComment != null){
+      throw new IllegalStateException("이미 생성된 월간리포트입니다.");
+    }
+    this.aiComment = aiComment;
+  }
 
 }
