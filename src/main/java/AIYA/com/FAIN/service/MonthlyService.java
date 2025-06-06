@@ -14,6 +14,7 @@ import AIYA.com.FAIN.repository.MonthlyReportRepository;
 import AIYA.com.FAIN.repository.ReportRepository;
 import AIYA.com.FAIN.repository.UserRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,9 +35,10 @@ public class MonthlyService {
         ActionType._119);
     Integer pCount = reportRepository.countByUserAndYearAndMonthAndActionType(users,year,month,
         ActionType.FAMILY);
-    MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month)
-        .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MONTHLY));
-//    monthlyReports.updateCount(fallCount,hCount,pCount);
+    MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month).orElse(null);
+    if (monthlyReports == null ){
+      return null;
+    }
     monthlyReports.setFallCount(fallCount);
     monthlyReports.setHCount(hCount);
     monthlyReports.setPCount(pCount);
@@ -55,9 +57,11 @@ public class MonthlyService {
     Integer morningCount = reportRepository.countFallsBetweenHours(users.getId(),year,month,6,12);
     Integer afternoonCount = reportRepository.countFallsBetweenHours(users.getId(),year,month,12,18);
     Integer nightCount = reportRepository.countFallsBetweenHours(users.getId(),year,month,18,24);
-    MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month)
-        .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MONTHLY));
-//    monthlyReports.updateGraph(dawnCount,morningCount,afternoonCount,nightCount);
+    MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month).orElse(null);
+    if (monthlyReports == null ){
+      return null;
+    }
+
     monthlyReports.setDawn(dawnCount);
     monthlyReports.setMorning(morningCount);
     monthlyReports.setAfternoon(afternoonCount);
@@ -103,9 +107,10 @@ public class MonthlyService {
     Users users = userRepository.findByUserId(userId)
         .orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER));
 
-    MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month)
-        .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MONTHLY));
-//    monthlyReports.updateAiComment(gptMonthResponse);
+    MonthlyReports monthlyReports = monthlyReportRepository.findByUserAndYearAndMonth(users,year,month).orElse(null);
+    if (monthlyReports == null ){
+      return null;
+    }
     monthlyReports.setAiComment(gptMonthResponse);
     monthlyReportRepository.save(monthlyReports);
 
