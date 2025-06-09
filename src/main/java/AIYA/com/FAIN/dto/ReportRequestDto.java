@@ -2,7 +2,7 @@ package AIYA.com.FAIN.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +34,7 @@ public class ReportRequestDto {
 
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-  private LocalDateTime situationTime;
+  private ZonedDateTime situationTime;
 
   //과거 리포트들
   private List<String> reportHistories;

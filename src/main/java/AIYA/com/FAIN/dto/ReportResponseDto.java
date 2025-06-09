@@ -1,7 +1,6 @@
 package AIYA.com.FAIN.dto;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class ReportResponseDto {
-  private LocalDateTime situationTime;
+  private ZonedDateTime situationTime;
   private String report;
 
 }

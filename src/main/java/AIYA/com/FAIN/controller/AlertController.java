@@ -44,12 +44,12 @@ public class AlertController {
     Users user = userRepository.findByUserId(dto.getUserId())
         .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
 
+    ZonedDateTime seoulTime = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
     // 낙상 상황 DB 저장
     Reports reports = new Reports();
     reports.setUser(user); // 유저의 기본키(id)가 저장됨
     reports.setSituationImg(dto.getSituationImg());
-    ZonedDateTime seoulTime = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
-    reports.setSituationTime(seoulTime.toLocalDateTime());
+    reports.setSituationTime(seoulTime);
 
     fallAlertRepository.save(reports);
 

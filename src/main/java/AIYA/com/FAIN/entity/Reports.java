@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,7 +46,7 @@ public class Reports {
 
   @CreationTimestamp //처음 insert될 때, 자동으로 시간 입력, 이후 변경되지 않음
   @Column(name="situation_time",updatable = false,nullable = false)
-  private LocalDateTime situationTime;
+  private ZonedDateTime situationTime;
 
   public void updateAction(ActionType actionType){
     if(this.actionType != null){

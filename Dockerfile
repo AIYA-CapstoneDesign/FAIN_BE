@@ -8,4 +8,4 @@ WORKDIR /app
 COPY build/libs/FAIN-0.0.1-SNAPSHOT.jar app.jar
 
 # 4. 실행 명령어 - prod 프로파일 활성화
-ENTRYPOINT ["java","-jar","-Dspring.profiles.active=prod","app.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-Duser.timezone=Asia/Seoul", "-jar", "app.jar"]
