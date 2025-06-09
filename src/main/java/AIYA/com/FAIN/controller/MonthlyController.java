@@ -35,11 +35,14 @@ public class MonthlyController {
       security = @SecurityRequirement(name = "BearerAuth")
   )
   @GetMapping("/counts")
-  public ResponseEntity<ApiResponseDto<CountResponseDto>> getCounts(@RequestParam("year") Integer year,@RequestParam("month") Integer month) throws Exception {
+  public ResponseEntity<ApiResponseDto<?>> getCounts(@RequestParam("year") Integer year,@RequestParam("month") Integer month) throws Exception {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String userId = authentication.getName();
 
     CountResponseDto countResponseDto = monthlyService.getCount(userId,year,month);
+    if (countResponseDto == null){
+      return ResponseEntity.ok(ApiResponseDto.successMessage("아직 월간 리포트가 생성되지 않았어요."));
+    }
 
     return ResponseEntity.ok(ApiResponseDto.success(countResponseDto));
   }
@@ -49,11 +52,14 @@ public class MonthlyController {
       security = @SecurityRequirement(name = "BearerAuth")
   )
   @GetMapping("/graphs")
-  public ResponseEntity<ApiResponseDto<GraphResponseDto>> getGraphs(@RequestParam("year") Integer year,@RequestParam("month") Integer month) throws Exception {
+  public ResponseEntity<ApiResponseDto<?>> getGraphs(@RequestParam("year") Integer year,@RequestParam("month") Integer month) throws Exception {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String userId = authentication.getName();
 
     GraphResponseDto graphResponseDto = monthlyService.getGraph(userId,year,month);
+    if (graphResponseDto == null){
+      return ResponseEntity.ok(ApiResponseDto.successMessage("아직 월간 리포트가 생성되지 않았어요."));
+    }
 
     return ResponseEntity.ok(ApiResponseDto.success(graphResponseDto));
 
@@ -65,7 +71,7 @@ public class MonthlyController {
       security = @SecurityRequirement(name = "BearerAuth")
   )
   @GetMapping("/reports")
-  public ResponseEntity<ApiResponseDto<MonthlyResponseDto>> getMonthlyReports(@RequestParam("year") Integer year,@RequestParam("month") Integer month) throws Exception {
+  public ResponseEntity<ApiResponseDto<?>> getMonthlyReports(@RequestParam("year") Integer year,@RequestParam("month") Integer month) throws Exception {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String userId = authentication.getName();
 
@@ -75,6 +81,9 @@ public class MonthlyController {
     String gptMonthResponse = pythonApiClient.monthlyReport(requestDto);
     //DB에 응답 저장하고 MonthlyResponseDto에 Monthlyreport 담기
     MonthlyResponseDto monthlyResponseDto = monthlyService.updateAndGetMonthlyReport(userId,gptMonthResponse,year,month);
+    if (monthlyResponseDto == null){
+      return ResponseEntity.ok(ApiResponseDto.successMessage("아직 월간 리포트가 생성되지 않았어요."));
+    }
     //response 프론트로 return 하기
     return ResponseEntity.ok(ApiResponseDto.success(monthlyResponseDto));
 
