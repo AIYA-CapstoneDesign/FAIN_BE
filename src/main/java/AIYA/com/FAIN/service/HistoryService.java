@@ -1,5 +1,7 @@
 package AIYA.com.FAIN.service;
 
+
+
 import AIYA.com.FAIN.dto.HistoryDetailResponseDto;
 import AIYA.com.FAIN.dto.HistoryResponseDto;
 import AIYA.com.FAIN.entity.Reports;
@@ -31,7 +33,7 @@ public class HistoryService {
     return reports.stream().map(r -> new HistoryResponseDto(
         r.getReportId().toString(),
         r.getSituationTime().toString(),
-        r.getActionType().toString()
+        r.getActionType() != null ? r.getActionType().toString() : null
     )).collect(Collectors.toList());
   }
 
