@@ -56,7 +56,8 @@ public class HistoryService {
         reports.getSituationTime().toString(),
         reports.getSituationImg(),
         reports.getReport(),
-        reports.getActionType().value()
+        reports.getActionType() != null ? reports.getActionType().value() : null
+
     );
   }
 
