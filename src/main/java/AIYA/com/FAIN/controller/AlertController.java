@@ -9,8 +9,8 @@ import AIYA.com.FAIN.repository.FallAlertRepository;
 import AIYA.com.FAIN.repository.MonthlyReportRepository;
 import AIYA.com.FAIN.repository.UserRepository;
 import AIYA.com.FAIN.service.FcmService;
-
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +48,8 @@ public class AlertController {
     Reports reports = new Reports();
     reports.setUser(user); // 유저의 기본키(id)가 저장됨
     reports.setSituationImg(dto.getSituationImg());
-    reports.setSituationTime(LocalDateTime.now());
+    ZonedDateTime seoulTime = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+    reports.setSituationTime(seoulTime.toLocalDateTime());
 
     fallAlertRepository.save(reports);
 
